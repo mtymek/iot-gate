@@ -1,0 +1,26 @@
+[
+  {
+    "ssid": "My Home Network",
+    "strength": 5
+  },
+  {
+    "ssid": "test",
+    "strength": 4
+  },
+  {
+    "ssid": "H5CKER5",
+    "strength": 1
+  },
+  {
+    "ssid": "Rotten Tomatoe",
+    "strength": 2
+  },
+  {
+    "ssid": "Long SSID name",
+    "strength": 4
+  },
+  {
+    "ssid": "Whateva",
+    "strength": 1
+  }
+]
