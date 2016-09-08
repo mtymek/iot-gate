@@ -56,6 +56,7 @@
             -webkit-appearance: none;
             font-size: 1rem;
             padding: 0.75rem;
+            width: 20rem;
         }
         button {
             background: #2980B9;
@@ -73,22 +74,35 @@
             font-size: 1rem;
             padding: 0.75rem;
             border-radius: 0.2rem;
+            width: 100%;
         }
-
+        #ssid_select_wrapper {
+            border: 1px solid #e5e5e5;
+            border-radius: 0;
+            border-radius: 0.2rem;
+        }
+        #ssid_select_wrapper label {
+            padding: 1rem;
+            margin-bottom: 0;
+            font-weight:bold;
+            font-size: 1.17em;
+            text-align: center;
+            text-transform: uppercase;
+            color: #444;
+        }
         #ssid_select {
             list-style-type: none;
             margin: 0;
             padding: 0;
-            border: 1px solid #e5e5e5;
-            border-radius: 0;
-            border-radius: 0.2rem;
+            border-top: 1px solid #e5e5e5;
             max-height: 10rem;
             overflow: auto;
+            background: #fbfbfb;
         }
         #ssid_select a {
             display: block;
-            padding: 0.5rem 1rem;
-            color: #333;
+            padding: 0.4rem 1rem;
+            color: #666;
             text-decoration: none;
         }
         #ssid_select a:hover, #ssid_select a.selected {
@@ -101,10 +115,33 @@
             color: #E74C3C;
             margin-bottom: 1rem;
             font-weight: bold;
+            text-align: center;
         }
 
+        #message {
+            border: 1px solid #e5e5e5;
+            border-radius: 0;
+            border-radius: 0.2rem;
+            width: 18.5rem;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
         #message h1 {
             color: #424242;
+            margin-top: 0;
+            margin-bottom: 1.80rem;
+        }
+        #message a {
+            text-decoration: none;
+            color: #2980B9;
+        }
+        #message .change-network {
+            margin-top: 2rem;
+            margin-bottom: 0;
+        }
+
+        #ssid_name, #ip_address {
+            font-weight:bold;
         }
 
         .spinner {
@@ -162,7 +199,7 @@
     <div id="message" style="display: none">
         <h1>Connected</h1>
         <p>Network: <span id="ssid_name">test</span></p>
-        <p>IP Address: <span id="ip_address"></span></p>
+        <p>IP Address: <span id="ip_address">192.168.1.134</span></p>
 
         <p class="change-network">
             <a href="javascript:scanNetwork()">Connect to different network</a>
@@ -172,17 +209,17 @@
         <div id="error" style="display: none">
             Unable to connect: <span id="error_message">lorem ipsum dolor</span>
         </div>
-        <div class="row">
-            <label>Select your network:</label>
+        <div class="row" id="ssid_select_wrapper">
+            <label>Select your network</label>
             <div id="ssid_select" onchange="javascript:selectSsid()"></div>
         </div>
         <div class="row">
-            <label for="ssid">SSID:</label>
-            <input type="text" name="ssid" id="ssid" />
+            <!--<label for="ssid">SSID:</label>-->
+            <input type="text" name="ssid" id="ssid" placeholder="SSID"/>
         </div>
         <div class="row">
-            <label for="password">Password:</label>
-            <input type="text" name="password" id="password" />
+            <!--<label for="password">Password:</label>-->
+            <input type="text" name="password" id="password" placeholder="Password"/>
         </div>
         <div class="row">
             <button type="submit" id="submit" onclick="javascript:connect()">Connect</button>
