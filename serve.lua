@@ -134,7 +134,6 @@ function SimpleHttpServer.route(self, sck, path, data)
             self:error(sck, 400)
             return
         end
-        ssid = data.ssid
         wifi.sta.disconnect()
         status = pcall(function () wifi.sta.config(data.ssid, data.password) end)
         if not status then
@@ -163,6 +162,7 @@ function SimpleHttpServer.route(self, sck, path, data)
 
     if path == '/api/status.json' then
         if wifi.sta.status() == 5 then
+            ssid, password, bssid_set, bssid=wifi.sta.getconfig()
             return self:json(sck, {connected = true, ip = wifi.sta.getip(), ssid = ssid})
         end
         return self:json(sck, {connected = false})

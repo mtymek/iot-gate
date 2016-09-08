@@ -330,7 +330,9 @@
     showLoader();
     api('status', null, function (status) {
         if (status.connected) {
-
+            ssidName.innerHTML = status.ssid;
+            ipAddress.innerHTML = status.ip;
+            showSuccess();
         } else {
             scanNetwork();
         }
