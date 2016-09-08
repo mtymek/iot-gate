@@ -15,18 +15,6 @@ cfg.gateway="192.168.1.1";
 wifi.ap.setip(cfg);
 wifi.setmode(wifi.STATIONAP)
 
-wifi.sta.config("(.)(.)","teletubispedal")
---wifi.sta.config("Cleeng Poznan","Cleengit!")
-wifi.sta.connect()
-tmr.alarm(1, 1000, 1, function()
-     if wifi.sta.getip() == nil then
-         print("Connecting...")
-     else
-         tmr.stop(1)
-         print("Connected, IP is "..wifi.sta.getip())
-     end
-end)
-
 str=nil;
 ssidTemp=nil;
 collectgarbage();
@@ -146,9 +134,12 @@ function SimpleHttpServer.route(self, sck, path, data)
             self:error(sck, 400)
             return
         end
-
+        ssid = data.ssid
         wifi.sta.disconnect()
-        wifi.sta.config(data.ssid, data.password)
+        status = pcall(function () wifi.sta.config(data.ssid, data.password) end)
+        if not status then
+            return self:json(sck, {success = false, message = "invalid password"})
+        end
         wifi.sta.connect()
         tmr.alarm(1, 1000, 1, function()
             print("Status: ")
@@ -164,10 +155,17 @@ function SimpleHttpServer.route(self, sck, path, data)
                  return self:json(sck, {success = false, message = "AP not found"})
              elseif wifi.sta.status() == 5 then
                  tmr.stop(1)
-                 return self:json(sck, {success = true, ip: wifi.sta.getip()})
+                 self:json(sck, {success = true, ip = wifi.sta.getip()})
              end
         end)
         return;
+    end
+
+    if path == '/api/status.json' then
+        if wifi.sta.status() == 5 then
+            return self:json(sck, {connected = true, ip = wifi.sta.getip(), ssid = ssid})
+        end
+        return self:json(sck, {connected = false})
     end
 
     self:error(sck, 404);
